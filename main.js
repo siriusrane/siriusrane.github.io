@@ -92,18 +92,18 @@
     requestAnimationFrame(step);
   }
 
-  /* ---- subtle hero medallion parallax (pointer only, transform-only) ---- */
-  var medallion = document.querySelector('.medallion');
-  if (medallion && !reduceMotion && window.matchMedia('(pointer:fine)').matches) {
+  /* ---- subtle hero portrait parallax (pointer only, transform-only) ---- */
+  var portrait = document.querySelector('.portrait-ring');
+  if (portrait && !reduceMotion && window.matchMedia('(pointer:fine)').matches) {
     var hero = document.querySelector('.hero');
     (hero || document).addEventListener('mousemove', function (e) {
       var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
       var dx = (e.clientX - cx) / cx, dy = (e.clientY - cy) / cy;
-      medallion.style.transform = 'translate(' + (dx * 10).toFixed(2) + 'px,' +
-        (dy * 10).toFixed(2) + 'px)';
+      portrait.style.transform = 'translate(' + (dx * 9).toFixed(2) + 'px,' +
+        (dy * 9).toFixed(2) + 'px)';
     }, { passive: true });
     (hero || document).addEventListener('mouseleave', function () {
-      medallion.style.transform = '';
+      portrait.style.transform = '';
     });
   }
 })();
