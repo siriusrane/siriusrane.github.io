@@ -144,8 +144,88 @@ h1.hero-name .ln2{display:block;color:var(--terra)}
 footer{flex-shrink:0;background:var(--ink);color:#8a8275;text-align:center;padding:30px 0 40px;font-family:'Archivo',sans-serif;font-size:12px;letter-spacing:.05em;position:relative;z-index:2}
 
 /* ===== reveal ===== */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);will-change:opacity,transform}
 .reveal.in{opacity:1;transform:none}
+
+/* ===== scroll progress bar ===== */
+.scroll-progress{
+  position:fixed;top:0;left:0;right:0;height:3px;z-index:60;
+  transform:scaleX(0);transform-origin:0 50%;
+  background:linear-gradient(90deg,var(--terra),var(--gold));
+  transition:transform .1s linear;pointer-events:none;
+}
+
+/* ===== nav scrolled state ===== */
+nav{transition:padding .35s ease,box-shadow .35s ease,background .35s ease}
+nav.scrolled{padding-top:12px;padding-bottom:12px;box-shadow:0 6px 24px -16px var(--shadow),0 1px 0 var(--line)}
+
+/* ===== nav link micro-interaction ===== */
+.navlinks a::after{transition:width .35s cubic-bezier(.2,.7,.2,1)}
+
+/* ===== button shine + lift ===== */
+.btn{position:relative;overflow:hidden}
+.btn::after{
+  content:"";position:absolute;top:0;left:-130%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;pointer-events:none;
+}
+.btn:hover::after{left:130%}
+.btn-solid:active{transform:translateY(0)}
+
+/* ===== home stats: count-up + hover ===== */
+.stat{padding:6px 4px;border-radius:6px;transition:transform .3s ease}
+.stat .n{font-variant-numeric:tabular-nums}
+.stat:hover{transform:translateY(-4px)}
+.stat:hover .n{color:#fff}
+
+/* ===== focus-areas strip (home) ===== */
+.focus{background:var(--bg-deep);padding:64px 0;position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.focus .eyebrow{display:block;margin-bottom:28px}
+.focus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);background:var(--paper)}
+.focus-item{padding:30px 28px;border-right:1px solid var(--line);transition:background .35s ease}
+.focus-item:last-child{border-right:none}
+.focus-item:hover{background:var(--bg)}
+.focus-item .fx-no{font-family:'Archivo',sans-serif;font-size:12px;letter-spacing:.1em;color:var(--gold)}
+.focus-item h3{font-size:21px;margin:10px 0 8px}
+.focus-item p{font-family:'Archivo',sans-serif;font-size:13.5px;line-height:1.6;color:var(--ink-soft)}
+.focus-item .fx-bar{height:2px;width:0;background:var(--terra);margin-top:16px;transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.focus-item:hover .fx-bar,.focus-item.in .fx-bar{width:42px}
+
+/* ===== timeline node animation ===== */
+.job-body::before{transition:transform .4s ease,background .4s ease,box-shadow .4s ease}
+.job.in .job-body::before{animation:nodePulse .9s ease both}
+@keyframes nodePulse{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.25)}100%{transform:scale(1);opacity:1}}
+.job:hover .job-body::before{background:var(--terra);box-shadow:0 0 0 5px rgba(168,80,58,.14)}
+.job-body{transition:transform .35s ease}
+.job:hover .job-body{transform:translateX(4px)}
+.job h3{transition:color .25s ease}
+.job:hover h3{color:var(--terra)}
+
+/* ===== publications hover ===== */
+.pub a{display:inline-block}
+.pub a span{display:inline-block;transition:transform .3s ease}
+.pub a:hover span{transform:translate(3px,-3px)}
+
+/* ===== contact links lift ===== */
+.clink{transition:all .25s ease}
+.clink:hover{transform:translateY(-3px)}
+
+/* ===== gentle page-load fade ===== */
+@keyframes pageIn{from{opacity:0}to{opacity:1}}
+main{animation:pageIn .5s ease both}
+
+/* ===== motion-safety ===== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .ring-text{animation:none}
+  .reveal{opacity:1;transform:none}
+}
+
+@media(max-width:760px){
+  .focus-grid{grid-template-columns:1fr}
+  .focus-item{border-right:none;border-bottom:1px solid var(--line)}
+  .focus-item:last-child{border-bottom:none}
+}
 
 /* ===== responsive ===== */
 @media(max-width:900px){
